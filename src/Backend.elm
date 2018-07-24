@@ -72,4 +72,19 @@ darLike identificador pelicula = if identificador == pelicula.id
 -- **************
 
 calcularPorcentajeDeCoincidencia : Preferences -> List Movie -> List Movie
-calcularPorcentajeDeCoincidencia preferencias = completaAca
+calcularPorcentajeDeCoincidencia preferencias = List.map (modificarPorcentaje preferencias)
+
+modificarPorcentaje : Preferences -> Movie -> Movie
+modificarPorcentaje preferencias pelicula = {pelicula | matchPercentage = min 100 (newPorcentage preferencias pelicula)}
+
+newPorcentage : Preferences -> Movie -> Int
+newPorcentage preferencias pelicula = (keyWord preferencias.keywords pelicula) + (generoPredilecto preferencias.genre pelicula)+ (actorFavorito preferencias.favoriteActor pelicula)
+
+keyWord : String->Movie->Int
+keyWord palabras pelicula= (((*)20)<<List.length<<List.filter (estaEnTitulo pelicula)) ((String.words<<hacerLower) palabras)
+
+generoPredilecto : String->Movie->Int
+generoPredilecto genero pelicula = if peliculaDelGenero genero pelicula then 60 else 0
+
+actorFavorito : String -> Movie -> Int
+actorFavorito actor pelicula = 0
