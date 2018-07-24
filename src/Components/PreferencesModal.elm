@@ -11,7 +11,7 @@ import Bootstrap.Form.Input as Input
 import Bootstrap.Button as Button
 
 preferencesModal : Model -> Html Msg
-preferencesModal model = 
+preferencesModal model =
   div
     []
     [ Dialog.view
@@ -24,16 +24,17 @@ preferencesModal model =
                         Form.group [] [
                           Form.label [for "keywords"] [text "Keywords: "],
                           Input.text [Input.id "keywords", Input.attrs [placeholder "Enter your keywords separated with a space",
-                          onInput UpdatePreferencesKeywords]]
+                          defaultValue model.preferences.keywords,onInput UpdatePreferencesKeywords]]
                         ],
                         Form.group [] [
                           Form.label [for "genre"] [text "Genre: "],
                           Input.text [Input.id "genre", Input.attrs [placeholder "Enter your favorite genre",
-                          onInput UpdatePreferencesGenre]]
+                          defaultValue model.preferences.genre,onInput UpdatePreferencesGenre]]
                         ],
                         Form.group [] [
                           Form.label [for "actor"] [text "Actor: "],
-                          Input.text [Input.id "actor", Input.attrs [placeholder "Enter your favorite actor",onInput UpdatePreferencesActor]]
+                          Input.text [Input.id "actor", Input.attrs [placeholder "Enter your favorite actor",
+                          defaultValue model.preferences.favoriteActor,onInput UpdatePreferencesActor]]
                         ],
                          Button.button [ Button.success , Button.attrs [onClick MatchPercentage ]] [ text "Add movie preferences" ]
   ])

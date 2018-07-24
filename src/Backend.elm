@@ -32,7 +32,8 @@ filtrarPeliculasPorGenero : String -> List Movie -> List Movie
 filtrarPeliculasPorGenero genero = List.filter (peliculaDelGenero genero)
 
 peliculaDelGenero : String -> Movie -> Bool
-peliculaDelGenero genero pelicula = List.any ((==)  (hacerLower genero)) (List.map hacerLower (pelicula.genre))
+peliculaDelGenero genero pelicula = if genero == "All" then True 
+  else List.any ((==)  (hacerLower genero)) (List.map hacerLower (pelicula.genre))
 
 -- **************
 -- Requerimiento: filtrar las películas que sean aptas para menores de edad,
