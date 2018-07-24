@@ -3,10 +3,11 @@ import Models exposing(Movie, Preferences)
 
 completaAca = identity
 
--- **************hh
+-- **************
 -- Requerimiento: filtrar películas por su título a medida que se escribe en el buscador;
 -- **************
-
+hacerLower : String -> String
+hacerLower = String.toLower
 filtrarPeliculasPorPalabrasClave : String -> List Movie -> List Movie
 filtrarPeliculasPorPalabrasClave palabras = List.filter (peliculaTienePalabrasClave palabras)
 
@@ -18,7 +19,7 @@ filtrarPeliculasPorPalabrasClave palabras = List.filter (peliculaTienePalabrasCl
 -- * busca una coincidencia exacta, pero si escribís "Avengers Ultron" debería encontrar a "Avengers: Age Of Ultron"
 --
 peliculaTienePalabrasClave : String -> Movie -> Bool
-peliculaTienePalabrasClave palabras pelicula = String.contains (String.toLower palabras) (String.toLower pelicula.title)
+peliculaTienePalabrasClave palabras pelicula = String.contains (hacerLower palabras) (hacerLower pelicula.title)
 --peliculaTienbePalabraClave palabras pelicula = List.all (==True) (List.map (flip<<String.contains (String.toLower pelicula.title)) (String.words<<String.toLower palabras))
 -- **************
 -- Requerimiento: visualizar las películas según el género elegido en un selector;
@@ -28,7 +29,7 @@ filtrarPeliculasPorGenero : String -> List Movie -> List Movie
 filtrarPeliculasPorGenero genero = List.filter (peliculaDelGenero genero)
 
 peliculaDelGenero : String -> Movie -> Bool
-peliculaDelGenero genero pelicula = List.any ((==)  genero) (pelicula.genre)
+peliculaDelGenero genero pelicula = List.any ((==)  (hacerLower genero)) (List.map hacerLower (pelicula.genre))
 
 -- **************
 -- Requerimiento: filtrar las películas que sean aptas para menores de edad,
