@@ -40,21 +40,38 @@ peliculaDelGenero genero pelicula = List.any ((==)  (hacerLower genero)) (List.m
 -- **************
 
 filtrarPeliculasPorMenoresDeEdad : Bool -> List Movie -> List Movie
-filtrarPeliculasPorMenoresDeEdad mostrarSoloMenores = completaAca
+filtrarPeliculasPorMenoresDeEdad mostrarSoloMenores peliculas = if mostrarSoloMenores then peliculasParaMenores peliculas else peliculas
+
+peliculasParaMenores : List Movie -> List Movie
+peliculasParaMenores peliculas = List.filter (.forKids) peliculas
+
 
 -- **************
 -- Requerimiento: ordenar las películas por su rating;
 -- **************
 
 ordenarPeliculasPorRating : List Movie -> List Movie
-ordenarPeliculasPorRating = completaAca
+ordenarPeliculasPorRating = List.foldl (::) []<<List.sortBy .rating
 
 -- **************
 -- Requerimiento: dar like a una película
 -- **************
 
 darLikeAPelicula : Int -> List Movie -> List Movie
-darLikeAPelicula id = completaAca
+darLikeAPelicula identificador = List.map (darLike identificador)
+
+darLike : Int -> Movie -> Movie
+darLike identificador pelicula = if identificador == pelicula.id
+    then {Movie | id = pelicula.id
+    ,poster = pelicula.poster
+    ,title = pelicula.title
+    ,rating=pelicula.rating
+    ,genre = pelicula.genre
+    ,link = pelicula.link
+    ,likes = pelicula.likes + 1
+    ,matchPercentage = pelicula.matchPercentage
+    ,forKids = pelicula.forKids}
+    else pelicula
 
 -- **************
 -- Requerimiento: cargar preferencias a través de un popup modal,
