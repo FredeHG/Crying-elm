@@ -14,13 +14,16 @@ filtrarPeliculasPorPalabrasClave palabras = List.filter (peliculaTienePalabrasCl
 -- esta función la dejamos casi lista, pero tiene un pequeño bug. ¡Corregilo!
 --
 -- Además tiene dos problemas, que también deberías corregir:
---
+
+--  La pelicula tiene que tener todas las palabras claves. recibo peliculas y las analizo de a una
+
 -- * distingue mayúsculas de minúsculas, pero debería encontrar a "Lion King" aunque escriba "kINg"
 -- * busca una coincidencia exacta, pero si escribís "Avengers Ultron" debería encontrar a "Avengers: Age Of Ultron"
 --
 peliculaTienePalabrasClave : String -> Movie -> Bool
-peliculaTienePalabrasClave palabras pelicula = String.contains (hacerLower palabras) (hacerLower pelicula.title)
---peliculaTienbePalabraClave palabras pelicula = List.all (==True) (List.map (flip<<String.contains (String.toLower pelicula.title)) (String.words<<String.toLower palabras))
+peliculaTienePalabrasClave palabras pelicula = List.all (estaEnTitulo pelicula) ((String.words<<hacerLower) palabras)
+estaEnTitulo : Movie -> String -> Bool
+estaEnTitulo pelicula palabra = String.contains palabra (hacerLower pelicula.title)
 -- **************
 -- Requerimiento: visualizar las películas según el género elegido en un selector;
 -- **************
