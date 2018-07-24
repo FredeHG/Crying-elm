@@ -62,15 +62,7 @@ darLikeAPelicula identificador = List.map (darLike identificador)
 
 darLike : Int -> Movie -> Movie
 darLike identificador pelicula = if identificador == pelicula.id
-    then {Movie | id = pelicula.id
-    ,poster = pelicula.poster
-    ,title = pelicula.title
-    ,rating=pelicula.rating
-    ,genre = pelicula.genre
-    ,link = pelicula.link
-    ,likes = pelicula.likes + 1
-    ,matchPercentage = pelicula.matchPercentage
-    ,forKids = pelicula.forKids}
+    then {pelicula | likes = pelicula.likes + 1}
     else pelicula
 
 -- **************
