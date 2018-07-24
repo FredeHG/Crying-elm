@@ -21,7 +21,7 @@ filtrarPeliculasPorPalabrasClave palabras = List.filter (peliculaTienePalabrasCl
 -- * busca una coincidencia exacta, pero si escribís "Avengers Ultron" debería encontrar a "Avengers: Age Of Ultron"
 --
 peliculaTienePalabrasClave : String -> Movie -> Bool
-peliculaTienePalabrasClave palabras pelicula = List.all (estaEnTitulo pelicula) ((String.words<<hacerLower) palabras)
+peliculaTienePalabrasClave palabras pelicula =List.all (estaEnTitulo pelicula) ((String.words<<hacerLower) palabras)
 estaEnTitulo : Movie -> String -> Bool
 estaEnTitulo pelicula palabra = String.contains palabra (hacerLower pelicula.title)
 -- **************
@@ -32,7 +32,7 @@ filtrarPeliculasPorGenero : String -> List Movie -> List Movie
 filtrarPeliculasPorGenero genero = List.filter (peliculaDelGenero genero)
 
 peliculaDelGenero : String -> Movie -> Bool
-peliculaDelGenero genero pelicula = if genero == "All" then True 
+peliculaDelGenero genero pelicula = if genero == "All" then True
   else List.any ((==)  (hacerLower genero)) (List.map hacerLower (pelicula.genre))
 
 -- **************

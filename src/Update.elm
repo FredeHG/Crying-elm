@@ -13,7 +13,7 @@ update msg model =
       {model | movies = moviesCollection}
 
     FilterName name ->
-      {model | movies = filtrarPeliculasPorPalabrasClave name moviesCollection}
+      {model | movies = filtrarPeliculasPorPalabrasClave name (filtrarPeliculasPorGenero model.genre moviesCollection)}
     IncrementLikes movieId ->
       {model | movies = darLikeAPelicula movieId model.movies}
     ShowDialog ->
