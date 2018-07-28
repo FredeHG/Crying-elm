@@ -32,8 +32,10 @@ filtrarPeliculasPorGenero : String -> List Movie -> List Movie
 filtrarPeliculasPorGenero genero = List.filter (peliculaDelGenero genero)
 
 peliculaDelGenero : String -> Movie -> Bool
-peliculaDelGenero genero pelicula = if genero == "All" then True
-  else List.member (hacerLower genero) (obtenerGenero pelicula.genre)
+peliculaDelGenero genero pelicula =
+  case genero of
+      "All" -> True
+      _ -> List.member (hacerLower genero) (obtenerGenero pelicula.genre)
 
 obtenerGenero : List String -> List String
 obtenerGenero = List.take 1<<List.map hacerLower
@@ -83,7 +85,10 @@ newPorcentage : Preferences -> Movie -> Int
 newPorcentage preferencias pelicula = (keyWord preferencias.keywords pelicula) + (generoPredilecto preferencias.genre pelicula)+ (actorFavorito preferencias.favoriteActor pelicula)
 
 keyWord : String->Movie->Int
-keyWord palabras pelicula= (((*)20)<<List.length<<List.filter (estaEnTitulo pelicula)) ((String.words<<hacerLower) palabras)
+keyWord palabras pelicula =
+   case palabras of
+    "" -> 0
+    _ -> (((*)20)<<List.length<<List.filter (estaEnTitulo pelicula)) ((String.words<<hacerLower) palabras)
 
 generoPredilecto : String->Movie->Int
 generoPredilecto genero pelicula = if peliculaDelGenero genero pelicula then 60
