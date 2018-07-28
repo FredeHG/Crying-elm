@@ -10,7 +10,7 @@ update msg model =
       model
 
     Reset ->
-      {model | movies = moviesCollection}
+      {model | movies = moviesCollection,preferences = Preferences "" "" ""}
 
     FilterName name ->
       {model | movies = filtrarPeliculasPorPalabrasClave name (filtrarPeliculasPorGenero model.genre moviesCollection)}

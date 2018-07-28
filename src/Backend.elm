@@ -33,13 +33,14 @@ filtrarPeliculasPorGenero genero = List.filter (peliculaDelGenero genero)
 
 peliculaDelGenero : String -> Movie -> Bool
 peliculaDelGenero genero pelicula = if genero == "All" then True
-  else List.any ((==)  (hacerLower genero)) (List.map hacerLower (pelicula.genre))
+  else List.member (hacerLower genero) (obtenerGenero pelicula.genre)
 
+obtenerGenero : List String -> List String
+obtenerGenero = List.take 1<<List.map hacerLower
 -- **************
 -- Requerimiento: filtrar las películas que sean aptas para menores de edad,
 --                usando un checkbox;
 -- **************
-
 filtrarPeliculasPorMenoresDeEdad : Bool -> List Movie -> List Movie
 filtrarPeliculasPorMenoresDeEdad mostrarSoloMenores peliculas = if mostrarSoloMenores then peliculasParaMenores peliculas else peliculas
 
@@ -85,7 +86,12 @@ keyWord : String->Movie->Int
 keyWord palabras pelicula= (((*)20)<<List.length<<List.filter (estaEnTitulo pelicula)) ((String.words<<hacerLower) palabras)
 
 generoPredilecto : String->Movie->Int
-generoPredilecto genero pelicula = if peliculaDelGenero genero pelicula then 60 else 0
+generoPredilecto genero pelicula = if peliculaDelGenero genero pelicula then 60
+   else if List.member (hacerLower genero) (cola pelicula.genre) then 15
+     else 0
+
+cola : List String -> List String
+cola = List.drop 1<<List.map hacerLower
 
 actorFavorito : String -> Movie -> Int
-actorFavorito actor pelicula = 0
+actorFavorito actor pelicula = if (List.member (hacerLower actor)<<List.map hacerLower) pelicula.actors then 50 else 0
