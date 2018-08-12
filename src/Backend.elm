@@ -8,6 +8,7 @@ completaAca = identity
 -- **************
 hacerLower : String -> String
 hacerLower = String.toLower
+
 filtrarPeliculasPorPalabrasClave : String -> List Movie -> List Movie
 filtrarPeliculasPorPalabrasClave palabras = List.filter (peliculaTienePalabrasClave palabras)
 
@@ -21,7 +22,8 @@ filtrarPeliculasPorPalabrasClave palabras = List.filter (peliculaTienePalabrasCl
 -- * busca una coincidencia exacta, pero si escribís "Avengers Ultron" debería encontrar a "Avengers: Age Of Ultron"
 --
 peliculaTienePalabrasClave : String -> Movie -> Bool
-peliculaTienePalabrasClave palabras pelicula =List.all (estaEnTitulo pelicula) ((String.words<<hacerLower) palabras)
+peliculaTienePalabrasClave palabras pelicula = List.all (estaEnTitulo pelicula) ((String.words<<hacerLower) palabras)
+
 estaEnTitulo : Movie -> String -> Bool
 estaEnTitulo pelicula palabra = String.contains palabra (hacerLower pelicula.title)
 -- **************

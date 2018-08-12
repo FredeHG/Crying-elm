@@ -49,4 +49,4 @@ createPoster : String -> Image
 createPoster imageUrl = { url= imageUrl, width= 400, height= 400 }
 
 initialModel : Model
-initialModel = { movies = moviesCollection, shouldShowDialog = False, preferences = Preferences "" "" "", genre = "", kidsProtection = False }
+initialModel = { movies = moviesCollection, shouldShowDialog = False, preferences = Preferences "" "" "", genre = "All", kidsProtection = False }
